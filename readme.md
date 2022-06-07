@@ -26,5 +26,5 @@
 
 #### 笔记
 
-​	因为是刚开始学习`kotlin`和`android`，做了一部分开发记录，参见[note.md](https://gitee.com/jky-tyy/moneymoney-kotlin/blob/master/note.md)
+​	因为是刚开始学习`kotlin`和`android`，做了一部分开发记录，参见[note.md](https://github.com/ExceptionsOccur/MoneyMoney/blob/main/note.md)
 

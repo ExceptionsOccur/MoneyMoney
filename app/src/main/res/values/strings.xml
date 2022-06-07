@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">MoneyMoney</string>
+
+    <string name="hint_enter_money">输入金额</string>
+    <string name="hint_enter_remark">输入备注</string>
+    <string name="hint_enter_type_name">请输入类型名称</string>
+    <string name="text_confirm">确定</string>
+
+
+    <string name="record_type_bonus">奖金</string>
+    <string name="record_type_book">书籍</string>
+    <string name="record_type_car">汽车</string>
+    <string name="record_type_chip">数码</string>
+    <string name="record_type_clippers">理发</string>
+    <string name="record_type_clothes">服饰</string>
+    <string name="record_type_electric_water">水电</string>
+    <string name="record_type_entertainment">娱乐</string>
+    <string name="record_type_fitness">健身</string>
+    <string name="record_type_fruit">水果</string>
+    <string name="record_type_game">游戏</string>
+    <string name="record_type_gift">礼物</string>
+    <string name="record_type_house">房屋</string>
+    <string name="record_type_lipstick">美妆</string>
+    <string name="record_type_medical">医药</string>
+    <string name="record_type_movie">电影</string>
+    <string name="record_type_pet">宠物</string>
+    <string name="record_type_phone_charge">话费</string>
+    <string name="record_type_prepaid">其他垫付</string>
+    <string name="record_type_redpackage">红包</string>
+    <string name="record_type_refund">报销</string>
+    <string name="record_type_repast">餐饮</string>
+    <string name="record_type_salary">工资</string>
+    <string name="record_type_sell">零售</string>
+    <string name="record_type_shopping">购物</string>
+    <string name="record_type_snacks">零食</string>
+    <string name="record_type_ticket">门票</string>
+    <string name="record_type_transport">交通</string>
+    <string name="record_type_vip">VIP</string>
+    <string name="record_type_yield">收益</string>
+
+    <string name="text_statistics">统计</string>
+    <string name="text_home">首页</string>
+    <string name="text_today_income">收入100.33</string>
+    <string name="text_today_pay">支出121.99</string>
+    <string name="text_month_pay">本月支出(元)</string>
+    <string name="text_month_income">本月收入(元)：</string>
+    <string name="text_remark">请输入备注信息</string>
+    <string name="text_back">返回</string>
+    <string name="text_add_income">收入</string>
+    <string name="text_add_pay">支出</string>
+    <string name="text_add_trans">转账</string>
+    <string name="text_add_settlement">结算</string>
+    <string name="text_add_auto">自动</string>
+    <string name="text_minus">-</string>
+    <string name="text_plus">+</string>
+    <string name="text_uncount">不统计</string>
+    <string name="text_count">正常统计</string>
+</resources>

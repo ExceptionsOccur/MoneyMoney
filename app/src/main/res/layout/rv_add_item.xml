@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="m"
+            type="org.onyx.moneymoney.database.entity.RecordType" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/add_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="3dp"
+        android:orientation="vertical"
+        app:record_type_isSelect="@{m.isChecked}">
+
+
+        <LinearLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:duplicateParentState="true"
+            android:background="@drawable/icon_background_selector">
+
+            <ImageView
+                android:id="@+id/add_item_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:duplicateParentState="true"
+                app:img_name="@{String.valueOf(m.imgName)}"
+                app:tint="@drawable/icon_selector"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/add_item_type"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginTop="5dp"
+            android:textSize="11sp"
+            android:textAlignment="center"
+            android:duplicateParentState="true"
+            android:text="@{String.valueOf(m.name)}" />
+
+    </LinearLayout>
+
+</layout>

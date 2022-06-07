@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- 键盘 -->
+    <style name="bg_press">
+        <!--        <item name="android:foreground">?attr/selectableItemBackground</item>-->
+    </style>
+
+    <!-- 键盘 -->
+    <style name="text_view_input" parent="bg_press">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
+    <!-- 键盘数字 -->
+    <style name="text_view_input_num" parent="text_view_input">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="text_view_input_confirm">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">5</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+</resources>

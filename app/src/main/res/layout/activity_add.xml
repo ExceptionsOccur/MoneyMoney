@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="org.onyx.moneymoney.utils.DateUtils" />
+
+        <variable
+            name="pageData"
+            type="org.onyx.moneymoney.database.dao.AddDataBean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/add_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="17"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp">
+
+            <TextView
+                android:id="@+id/add_back"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
+                android:text="@string/text_back"
+                app:drawableLeftCompat="@drawable/ic_back"
+                app:drawableTint="@color/white" />
+
+            <!--            </LinearLayout>-->
+
+            <LinearLayout
+                android:id="@+id/add_record_type"
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+
+                <TextView
+                    android:id="@+id/add_type_pay"
+                    android:layout_width="45dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="20dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@drawable/navi_color_selector"
+                    android:text="@string/text_add_pay" />
+
+                <TextView
+                    android:id="@+id/add_type_income"
+                    android:layout_width="45dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@drawable/navi_color_selector"
+                    android:text="@string/text_add_income" />
+
+                <TextView
+                    android:id="@+id/add_type_trans"
+                    android:layout_width="45dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@drawable/navi_color_selector"
+                    android:text="@string/text_add_trans" />
+
+                <TextView
+                    android:id="@+id/add_type_settlement"
+                    android:layout_width="45dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@drawable/navi_color_selector"
+                    android:text="@string/text_add_settlement" />
+
+                <TextView
+                    android:id="@+id/add_type_auto"
+                    android:layout_width="45dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@drawable/navi_color_selector"
+                    android:text="@string/text_add_auto" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="25dp"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/radius_top_16dp"
+                android:id="@+id/rv_add"
+                tools:ignore="NestedWeights" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="4dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_calendar"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/add_item_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="6dp"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_color_black"
+                            android:text="@{pageData.date}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@drawable/ic_clock"
+                            app:tint="@color/text_color_black"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/add_item_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="17dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="6dp"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_color_black"
+                            android:text="@{pageData.time}" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/add_remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="6dp"
+                        android:textSize="12sp"
+                        android:background="@null"
+                        android:textColor="@color/text_color_black"
+                        android:hint="@string/text_remark"
+                        android:singleLine="true"
+                        android:inputType="text"
+                        android:text="@{pageData.remark}"
+                        android:imeOptions="actionDone"
+                        tools:ignore="Autofill" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/money_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:hint="@string/hint_enter_money"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/text_color_black"
+                android:textColorHint="@color/gray"
+                android:background="@drawable/radius_bottom_16dp"
+                android:textSize="36sp"
+                android:text="@={pageData.money}"
+                tools:ignore="Autofill" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/keyboard_container"
+            android:layout_width="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_height="0dp"
+            android:layout_weight="9">
+
+            <include
+                android:id="@+id/keyboard"
+                layout="@layout/layout_keyboard"
+                bind:keyboardData="@{pageData}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

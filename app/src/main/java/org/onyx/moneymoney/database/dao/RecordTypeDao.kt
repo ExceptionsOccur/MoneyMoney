@@ -21,4 +21,12 @@ interface RecordTypeDao {
     @Transaction
     @Query("select * from record order by time desc")
     fun getAllRecordWithTypes(): Flow<List<RecordWithType>>
+
+    @Transaction
+    @Query("select * from recordtype where type = 1")
+    fun getRecordTypesWithPay(): Flow<List<RecordType>>
+
+    @Transaction
+    @Query("select * from recordtype  where type = 0")
+    fun getRecordTypesWithIncome(): Flow<List<RecordType>>
 }

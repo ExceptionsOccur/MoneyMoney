@@ -48,6 +48,18 @@ class AddRecordViewModel : BaseViewModel() {
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getRecordTypesWithPay(): Flow<List<RecordType>> {
+        return mDataSource.getRecordTypesWithPay().catch { e ->
+            e.printStackTrace()
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getRecordTypesWithIncome(): Flow<List<RecordType>> {
+        return mDataSource.getRecordTypesWithIncome().catch { e ->
+            e.printStackTrace()
+        }.flowOn(Dispatchers.IO)
+    }
+
     fun insertRecord(record: Record) {
         viewModelScope.launch(Dispatchers.IO) {
             mDataSource.insertRecord(record)
@@ -56,25 +68,6 @@ class AddRecordViewModel : BaseViewModel() {
 
     fun getRecycleItemView(rv: RecyclerView, pos: Int): View? {
         return rv.layoutManager?.findViewByPosition(pos)
-    }
-
-    fun sigleSelectGroup(vararg views: View) {
-        views[typeIndex].isSelected = true
-        typeIndex = 3
-        val length = views.size
-        val unselectOthers = { i: Int ->
-            for (index in 0 until length) {
-                if (i == index) continue
-                views[index].isSelected = false
-            }
-        }
-        for (index in 0 until length) {
-            views[index].setOnClickListener {
-                it.isSelected = true
-                unselectOthers(index)
-                typeIndex = if (index == 0) 3 else 5
-            }
-        }
     }
 
     fun customKeyboardInput(targetView: EditText, vararg keyboardBtns: TextView) {

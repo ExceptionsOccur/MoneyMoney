@@ -204,21 +204,35 @@
             </LinearLayout>
 
 
-            <EditText
-                android:id="@+id/money_input"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:hint="@string/hint_enter_money"
-                android:inputType="number"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textColor="@color/text_color_black"
-                android:textColorHint="@color/gray"
-                android:background="@drawable/radius_bottom_16dp"
-                android:textSize="36sp"
-                android:text="@={pageData.money}"
-                tools:ignore="Autofill" />
+                android:orientation="horizontal"
+                android:background="@drawable/radius_bottom_16dp">
+
+                <Spinner
+                    android:layout_marginStart="8dp"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center" />
+
+                <EditText
+                    android:id="@+id/money_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:hint="@string/hint_enter_money"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/text_color_black"
+                    android:textColorHint="@color/gray"
+                    android:background="@drawable/radius_bottom_16dp"
+                    android:textSize="36sp"
+                    android:text="@={pageData.money}"
+                    tools:ignore="Autofill" />
+
+            </LinearLayout>
 
 
         </LinearLayout>

@@ -33,6 +33,9 @@ class AddRecordActivity : BaseActivity() {
     private lateinit var binding: ActivityAddBinding
     private lateinit var imm: InputMethodManager
     private var addDataBean = AddDataBean()
+    private var typeIndex: Int by Delegates.observable(0, onChange = { _, _, newValue -> handleTypeChange(newValue) })
+    private var recordTypeWithPay = listOf<RecordType>()
+    private var recordTypeWithIncome = listOf<RecordType>()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_add
@@ -73,6 +76,44 @@ class AddRecordActivity : BaseActivity() {
                 setData(it)
             }
         }
+        lifecycleScope.launchWhenCreated {
+            addViewModel.getRecordTypesWithPay().collect {
+                recordTypeWithPay = it
+            }
+        }
+        lifecycleScope.launchWhenCreated {
+            addViewModel.getRecordTypesWithIncome().collect {
+                recordTypeWithIncome = it
+            }
+        }
+    }
+
+    private fun handleTypeChange(to: Int) {
+        if (to == 3) {
+            setData(recordTypeWithPay)
+        }
+        if (to == 5) {
+            setData(recordTypeWithIncome)
+        }
+    }
+
+    private fun singleSelectGroup(vararg views: View) {
+        views[typeIndex].isSelected = true
+        typeIndex = 3
+        val length = views.size
+        val unselectOthers = { i: Int ->
+            for (index in 0 until length) {
+                if (i == index) continue
+                views[index].isSelected = false
+            }
+        }
+        for (index in 0 until length) {
+            views[index].setOnClickListener {
+                it.isSelected = true
+                unselectOthers(index)
+                typeIndex = if (index == 0) 3 else 5
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -97,7 +138,7 @@ class AddRecordActivity : BaseActivity() {
             addViewModel.insertRecord(addDataBean.toRecord())
             finish()
         }
-        addViewModel.sigleSelectGroup(
+        singleSelectGroup(
             binding.addTypePay,
             binding.addTypeIncome,
             binding.addTypeTrans,

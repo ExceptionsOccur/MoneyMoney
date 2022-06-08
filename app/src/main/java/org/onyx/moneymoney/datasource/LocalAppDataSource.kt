@@ -1,9 +1,7 @@
 package org.onyx.moneymoney.datasource
 
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import org.onyx.moneymoney.database.AppDatabase
 import org.onyx.moneymoney.database.entity.Record
 import org.onyx.moneymoney.database.entity.RecordType
@@ -49,5 +47,13 @@ class LocalAppDataSource : AppDateSource {
 
     override fun getAllRecordWithTypes(): Flow<List<RecordWithType>> {
         return mAppDatabase.getRecordTypeDao().getAllRecordWithTypes()
+    }
+
+    override fun getRecordTypesWithPay(): Flow<List<RecordType>> {
+        return mAppDatabase.getRecordTypeDao().getRecordTypesWithPay()
+    }
+
+    override fun getRecordTypesWithIncome(): Flow<List<RecordType>> {
+        return mAppDatabase.getRecordTypeDao().getRecordTypesWithIncome()
     }
 }

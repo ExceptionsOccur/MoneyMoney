@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -134,7 +135,15 @@ class AddRecordActivity : BaseActivity() {
             addDataBean.countedText = if (addDataBean.counted > 0) getString(R.string.text_count) else getString(R.string.text_uncount)
         }
         binding.keyboard.keyboardConfirm.setOnClickListener {
-            addDataBean.type = addViewModel.typeIndex
+            addDataBean.type = typeIndex
+            if (typeIndex == 3 && addDataBean.money[0] != '-') {
+                if (addDataBean.money[0] == '+')
+                    addDataBean.money = "-" + addDataBean.money.substring(1)
+            }
+            if (typeIndex == 5 && addDataBean.money[0] == '-') {
+                addDataBean.money = addDataBean.money.substring(1)
+            }
+            Log.d("tag", addDataBean.money)
             addViewModel.insertRecord(addDataBean.toRecord())
             finish()
         }

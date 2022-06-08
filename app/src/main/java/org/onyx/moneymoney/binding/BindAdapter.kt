@@ -68,7 +68,7 @@ class BindAdapter {
 
         /**
          * 添加记录时记录分类的选中标志
-         */  
+         */
         @JvmStatic
         @BindingAdapter("record_type_isSelect")
         fun setRecordTypeState(ly: LinearLayout, state: Int) {
@@ -95,7 +95,7 @@ class BindAdapter {
         @JvmStatic
         @BindingAdapter("navi_select")
         fun setMoneyText(ly: LinearLayout, isSelected: Boolean) {
-            ly.isSelected = if(isSelected) true else false
+            ly.isSelected = isSelected
         }
     }
 }

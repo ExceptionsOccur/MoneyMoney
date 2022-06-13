@@ -107,10 +107,8 @@
   
   // selector.xml
   <selector xmlns:android="http://schemas.android.com/apk/res/android">
-      <item android:color="@color/white"
-          android:state_selected="false"/>
-      <item android:color="@color/black"
-          android:state_selected="true"/>
+      <item android:color="@color/white" android:state_selected="false"/>
+      <item android:color="@color/black" android:state_selected="true"/>
   </selector>
   
   // activity.kt
@@ -119,15 +117,15 @@
   dataBinding.model.selected = true
   ...
   ```
-
+  
 - 数据库操作放在协程上处理，指定`IO`调度，但是当把所有的数据库的异步操作放至同一个`lifecycleScope`时并不能正确执行，只有每一个数据库异步操作对应一个`lifecycleScope`才正常，目前没去探究原因，协程本身就管理着一个线程池用来进行`多线程`操作，一个操作开一个`lifecycleScope`按理说影响不大
 
 - `kotlin`是可以对数据进行监听的，也就是可以定义一个回调，在数据发生变化时执行，实现也很简单，将数据委托给`Delegates.observable`，由该类接管数据的`set`方法
 
   ```kotlin
-  // 初始值设为0，改变时调用onDataChange方法，onChange中第一个参数是一个反射对象，也就是data的属性
-  private var data: Int by Delegates.observable(0, onChange = { _, old, new ->
-          onDataChange(old, new)
+  // 初始值设为0，改变时调用自定义的onDataChange方法，onChange中第一个参数是一个反射对象，也就是data的属性
+  private var data: Int by Delegates.observable(0, onChange = { _, oldValue, newValue ->
+          onDataChange(oldValue, newValue)
   })
   
   /**
@@ -141,7 +139,7 @@
 - 尝试使用注解将控件注入至方法中
 
   ```kotlin
-  // Evenbase注解
+  // EvenBase注解
   @Target(AnnotationTarget.ANNOTATION_CLASS)
   @Retention(AnnotationRetention.RUNTIME)
   annotation class EvenBase(val eventType: String, val eventClass: KClass<*>)

@@ -1,5 +1,6 @@
 package org.onyx.moneymoney.database.entity
 
+import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -32,6 +33,7 @@ import java.util.*
     indices = [Index(value = ["type_id", "time", "money", "create_time"])]
 )
 @Parcelize
+@SuppressLint("ParcelCreator")
 open class Record(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,

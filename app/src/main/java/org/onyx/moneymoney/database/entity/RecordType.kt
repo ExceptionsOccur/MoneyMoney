@@ -1,5 +1,6 @@
 package org.onyx.moneymoney.database.entity
 
+import android.annotation.SuppressLint
 import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.room.*
@@ -17,6 +18,7 @@ import kotlinx.parcelize.Parcelize
  * @constructor Create empty Record type
  */
 @Parcelize
+@SuppressLint("ParcelCreator")
 @Entity(indices = [Index(value = ["state", "type"])])
 class RecordType(
     @PrimaryKey(autoGenerate = true)

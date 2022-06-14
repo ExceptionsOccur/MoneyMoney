@@ -1,5 +1,6 @@
 package org.onyx.moneymoney.database.entity
 
+import android.annotation.SuppressLint
 import androidx.room.Relation
 
 /**
@@ -10,6 +11,7 @@ import androidx.room.Relation
  * @property recordTypes    类型列表
  * @constructor Create empty Record with type
  */
+@SuppressLint("ParcelCreator")
 class RecordWithType(
     @Relation(parentColumn = "type_id", entityColumn = "id", entity = RecordType::class)
     var recordTypes: List<RecordType> = arrayListOf()

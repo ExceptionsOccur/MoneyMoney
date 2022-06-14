@@ -25,14 +25,33 @@ open class AddDataBean(
 ) : BaseObservable() {
     var type: Int = 3
     var recordType: RecordType = RecordType()
+
+    @get:Bindable
     var date: String = DateUtils.getMonthDateString() ?: "01-01"
+        set(value) {
+            field = value
+            notifyChange()
+        }
+
+    @get:Bindable
     var time: String = DateUtils.getCurrentTimeString() ?: "00:00"
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
     @get:Bindable
     var remark: String = ""
 
     @get:Bindable
     var money: String = ""
+
+    @get:Bindable
+    var moneyFrom: List<String> = listOf("支付宝", "京东")
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
     @get:Bindable
     var counted: Int = 1

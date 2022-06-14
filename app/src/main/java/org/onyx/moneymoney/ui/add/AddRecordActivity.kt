@@ -1,6 +1,8 @@
 package org.onyx.moneymoney.ui.add
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -19,10 +21,12 @@ import com.drake.brv.utils.bindingAdapter
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
 import org.onyx.moneymoney.R
+import org.onyx.moneymoney.annotation.OnClick
 import org.onyx.moneymoney.base.BaseActivity
 import org.onyx.moneymoney.database.dao.AddDataBean
 import org.onyx.moneymoney.database.entity.RecordType
 import org.onyx.moneymoney.databinding.ActivityAddBinding
+import java.util.*
 import kotlin.properties.Delegates
 
 @Router(path = "/add")
@@ -30,7 +34,7 @@ class AddRecordActivity : BaseActivity() {
     private var rvSelected: Int by Delegates.observable(0, onChange = { _, old, new ->
         onRvSelectedChange(old, new)
     })
-    private val addViewModel = AddRecordViewModel()
+    private val vm = AddRecordViewModel()
     private lateinit var binding: ActivityAddBinding
     private lateinit var imm: InputMethodManager
     private var addDataBean = AddDataBean()
@@ -66,24 +70,24 @@ class AddRecordActivity : BaseActivity() {
                 rvSelected = adapterPosition
             }
         }
-        addViewModel.selectDefaultItemInRv(rv, addDataBean)
+        vm.selectDefaultItemInRv(rv, addDataBean)
         // 默认正常统计
         addDataBean.counted = 1
     }
 
     private fun initCoroutines() {
         lifecycleScope.launchWhenCreated {
-            addViewModel.getAllRecordTypes().collect {
+            vm.getAllRecordTypes().collect {
                 setData(it)
             }
         }
         lifecycleScope.launchWhenCreated {
-            addViewModel.getRecordTypesWithPay().collect {
+            vm.getRecordTypesWithPay().collect {
                 recordTypeWithPay = it
             }
         }
         lifecycleScope.launchWhenCreated {
-            addViewModel.getRecordTypesWithIncome().collect {
+            vm.getRecordTypesWithIncome().collect {
                 recordTypeWithIncome = it
             }
         }
@@ -144,7 +148,7 @@ class AddRecordActivity : BaseActivity() {
                 addDataBean.money = addDataBean.money.substring(1)
             }
             Log.d("tag", addDataBean.money)
-            addViewModel.insertRecord(addDataBean.toRecord())
+            vm.insertRecord(addDataBean.toRecord())
             finish()
         }
         singleSelectGroup(
@@ -160,8 +164,8 @@ class AddRecordActivity : BaseActivity() {
 
             @RequiresApi(Build.VERSION_CODES.M)
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                addViewModel.changeColorIfDisable(binding.keyboard.keyboardNumPoint, enable = s?.contains(".") != true)
-                addViewModel.changeColorIfDisable(
+                vm.changeColorIfDisable(binding.keyboard.keyboardNumPoint, enable = s?.contains(".") != true)
+                vm.changeColorIfDisable(
                     binding.keyboard.keyboardPlus,
                     binding.keyboard.keyboardMinus,
                     enable = s?.isEmpty() == true
@@ -174,7 +178,7 @@ class AddRecordActivity : BaseActivity() {
 
         })
 
-        addViewModel.customKeyboardInput(
+        vm.customKeyboardInput(
             binding.moneyInput,
             binding.keyboard.keyboardNumPoint,
             binding.keyboard.keyboardMinus,
@@ -190,8 +194,40 @@ class AddRecordActivity : BaseActivity() {
             binding.keyboard.keyboardNum8,
             binding.keyboard.keyboardNum9
         )
-        addViewModel.customKeyboardDelete(binding.moneyInput, binding.keyboard.keyboardDel)
+        vm.customKeyboardDelete(binding.moneyInput, binding.keyboard.keyboardDel)
 
+    }
+
+    @OnClick(ids = [R.id.date_picker])
+    fun clickDatePicker() {
+        val listener = DatePickerDialog.OnDateSetListener { _, _, month, dayOfMonth ->
+            val actualMonth = month + 1
+            addDataBean.date = "$actualMonth-$dayOfMonth"
+        }
+        val calendar = Calendar.getInstance()
+        val dataPickerDialog =
+            DatePickerDialog(
+                this,
+                listener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+        dataPickerDialog.show()
+    }
+
+    @OnClick(ids = [R.id.time_picker])
+    fun clickTimePicker() {
+        val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute -> addDataBean.time = "$hourOfDay:$minute" }
+        val calendar = Calendar.getInstance()
+        val timePickerDialog = TimePickerDialog(
+            this,
+            listener,
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            true
+        )
+        timePickerDialog.show()
     }
 
 

@@ -132,6 +132,7 @@
                     android:layout_weight="1">
 
                     <LinearLayout
+                        android:id="@+id/date_picker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -155,6 +156,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/time_picker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -214,7 +216,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:entries="@{pageData.moneyFrom}" />
 
                 <EditText
                     android:id="@+id/money_input"

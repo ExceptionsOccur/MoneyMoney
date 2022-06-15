@@ -14,6 +14,9 @@ object DateUtils {
     val ALL_FORMAT: DateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
 
     @SuppressLint("SimpleDateFormat")
+    val ALL_FORMAT_EXCEPT_SS: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+
+    @SuppressLint("SimpleDateFormat")
     val MONTH_DAY_FORMAT: DateFormat = SimpleDateFormat("MM-dd")
 
     @SuppressLint("SimpleDateFormat")
@@ -23,7 +26,7 @@ object DateUtils {
     val YEAR_MONTH_DAY_FORMAT: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     @SuppressLint("SimpleDateFormat")
-    val FORMAT_FOR_FIEL_NAME: DateFormat = SimpleDateFormat("_yy_MM_dd_HH_mm_ss")
+    val FORMAT_FOR_FILE_NAME: DateFormat = SimpleDateFormat("_yy_MM_dd_HH_mm_ss")
 
     /**
      * Get today date
@@ -89,7 +92,17 @@ object DateUtils {
      */
     @JvmStatic
     fun getCurrentDateString(): String? {
-        return date2String(Date(), FORMAT_FOR_FIEL_NAME)
+        return date2String(Date(), FORMAT_FOR_FILE_NAME)
+    }
+
+    /**
+     * Get date string
+     * 根据Date获取全格式时间
+     * @return yy-MM-dd-HH-mm-ss 格式日期
+     */
+    @JvmStatic
+    fun getAllFormatDateString(date: Date?): String? {
+        return date2String(date, ALL_FORMAT_EXCEPT_SS)
     }
 
     /**

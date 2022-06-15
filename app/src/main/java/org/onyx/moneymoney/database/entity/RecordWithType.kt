@@ -2,6 +2,8 @@ package org.onyx.moneymoney.database.entity
 
 import android.annotation.SuppressLint
 import androidx.room.Relation
+import org.onyx.moneymoney.database.dao.RecordDetailBean
+import org.onyx.moneymoney.utils.DateUtils
 
 /**
  * Record with type
@@ -15,4 +17,15 @@ import androidx.room.Relation
 class RecordWithType(
     @Relation(parentColumn = "type_id", entityColumn = "id", entity = RecordType::class)
     var recordTypes: List<RecordType> = arrayListOf()
-) : Record()
+) : Record() {
+    fun getDetail(): RecordDetailBean {
+        val detail = RecordDetailBean()
+        detail.imgName = recordTypes[0].imgName
+        detail.category = category
+        detail.type = paymentType
+        detail.money = money.toString()
+        detail.time = DateUtils.getAllFormatDateString(time)!!
+        detail.remark = remark
+        return detail
+    }
+}

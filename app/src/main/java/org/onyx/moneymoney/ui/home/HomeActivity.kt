@@ -9,6 +9,7 @@ import com.didi.drouter.api.DRouter
 import com.drake.brv.utils.linear
 import com.drake.brv.utils.models
 import com.drake.brv.utils.setup
+import com.google.gson.Gson
 import org.onyx.moneymoney.R
 import org.onyx.moneymoney.annotation.OnClick
 import org.onyx.moneymoney.base.BaseActivity
@@ -87,11 +88,11 @@ class HomeActivity : BaseActivity() {
     private fun initView() {
         homeBinding.rvHome.linear().setup {
             addType<RecordWithType>(R.layout.rv_home_item)
-//            onClick(R.id.rv_home_item) {
-//                DRouter.build("/record_detail")
-//                    .putExtra("data", Gson().toJson(getModel<RecordWithType>(adapterPosition)))
-//                    .start()
-//            }
+            onClick(R.id.rv_home_item) {
+                DRouter.build("/record_detail")
+                    .putExtra("data", Gson().toJson(getModel<RecordWithType>(adapterPosition)))
+                    .start()
+            }
         }
         homeDataBean.naviSelect = 0
     }

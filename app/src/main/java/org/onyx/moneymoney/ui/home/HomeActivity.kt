@@ -20,9 +20,9 @@ import org.onyx.moneymoney.databinding.ActivityHomeBinding
 @Router(path = "/home")
 class HomeActivity : BaseActivity() {
 
-    private lateinit var homeBinding: ActivityHomeBinding
-    private val homeViewModel: HomeViewModel = HomeViewModel()
-    private var homeDataBean = HomeDataBean()
+    private lateinit var binding: ActivityHomeBinding
+    private val vm: HomeViewModel = HomeViewModel()
+    private var bean = HomeDataBean()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_home
@@ -32,7 +32,7 @@ class HomeActivity : BaseActivity() {
     override fun onInit(savedInstanceState: Bundle?) {
         setImmersive()
 
-        homeBinding = getDataBinding() as ActivityHomeBinding
+        binding = getDataBinding() as ActivityHomeBinding
 
         initView()
         initCoroutines()
@@ -42,51 +42,65 @@ class HomeActivity : BaseActivity() {
 
     private fun initCoroutines() {
         lifecycleScope.launchWhenCreated {
-            homeViewModel.getAllRecordTypes().collect {
+            vm.getAllRecordTypes().collect {
                 if (it.isEmpty())
-                    homeViewModel.initRecordTypes()
+                    vm.initRecordTypes()
             }
         }
         lifecycleScope.launchWhenCreated {
-            homeViewModel.getAllRecordWithTypes().collect {
+            vm.getAllRecordWithTypes().collect {
                 setData(it)
             }
         }
         lifecycleScope.launchWhenCreated {
-            homeViewModel.countPayThisMonth().collect {
+            vm.countPayThisMonth().collect {
                 if (it.isNotEmpty()) {
-                    homeDataBean.payThisMonth = String.format(it[0].toString())
+                    bean.payThisMonth = String.format(it[0].toString())
                 }
             }
         }
         lifecycleScope.launchWhenCreated {
-            homeViewModel.countIncomeThisMonth().collect {
+            vm.countIncomeThisMonth().collect {
                 if (it.isNotEmpty())
-                    homeDataBean.incomeThisMonth = String.format(it[0].toString())
+                    bean.incomeThisMonth = String.format(it[0].toString())
+            }
+        }
+        lifecycleScope.launchWhenCreated {
+            vm.countPayThisDay().collect {
+                if (it.isNotEmpty()) {
+                    bean.payToday = String.format(it[0].toString())
+                }
+            }
+        }
+        lifecycleScope.launchWhenCreated {
+            vm.countIncomeThisDay().collect {
+                if (it.isNotEmpty()) {
+                    bean.incomeToday = String.format(it[0].toString())
+                }
             }
         }
     }
 
     @OnClick(ids = [R.id.navi_home])
     fun clickNaviHome() {
-        homeDataBean.naviSelect = 0
+        bean.naviSelect = 0
     }
 
     private fun initEvent() {
-//        homeBinding.naviHome.setOnClickListener {
-//            homeDataBean.naviSelect = 0
+//        binding.naviHome.setOnClickListener {
+//            bean.naviSelect = 0
 //        }
-        homeBinding.naviStatistic.setOnClickListener {
-            homeDataBean.naviSelect = 1
+        binding.naviStatistic.setOnClickListener {
+            bean.naviSelect = 1
         }
 
-        homeBinding.fabAdd.setOnClickListener {
+        binding.fabAdd.setOnClickListener {
             DRouter.build("/add").start()
         }
     }
 
     private fun initView() {
-        homeBinding.rvHome.linear().setup {
+        binding.rvHome.linear().setup {
             addType<RecordWithType>(R.layout.rv_home_item)
             onClick(R.id.rv_home_item) {
                 DRouter.build("/record_detail")
@@ -94,15 +108,15 @@ class HomeActivity : BaseActivity() {
                     .start()
             }
         }
-        homeDataBean.naviSelect = 0
+        bean.naviSelect = 0
     }
 
     private fun initData() {
         // kotlin 数据都是引用，赋值过程可以看作绑定过程
-        homeBinding.pageData = homeDataBean
+        binding.pageData = bean
     }
 
     private fun setData(data: List<Any>) {
-        homeBinding.rvHome.models = data
+        binding.rvHome.models = data
     }
 }

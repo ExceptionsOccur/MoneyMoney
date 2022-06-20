@@ -29,4 +29,12 @@ interface RecordDao {
     @Transaction
     @Query("select sum(money) from record where payment_type = 5 and counted = 1 and time between :start and :end")
     fun countIncomeThisMonth(start: Date, end: Date): Flow<List<BigDecimal>>
+
+    @Transaction
+    @Query("select sum(money) from record where payment_type = 3 and counted = 1 and time between :start and :end")
+    fun countPayThisDay(start: Date, end: Date): Flow<List<BigDecimal>>
+
+    @Transaction
+    @Query("select sum(money) from record where payment_type = 5 and counted = 1 and time between :start and :end")
+    fun countIncomeThisDay(start: Date, end: Date): Flow<List<BigDecimal>>
 }

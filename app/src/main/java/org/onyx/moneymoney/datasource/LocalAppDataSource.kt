@@ -8,6 +8,7 @@ import org.onyx.moneymoney.database.entity.RecordType
 import org.onyx.moneymoney.database.entity.RecordWithType
 import org.onyx.moneymoney.utils.DateUtils
 import java.math.BigDecimal
+import java.util.*
 
 
 class LocalAppDataSource : AppDateSource {
@@ -55,5 +56,17 @@ class LocalAppDataSource : AppDateSource {
 
     override fun getRecordTypesWithIncome(): Flow<List<RecordType>> {
         return mAppDatabase.getRecordTypeDao().getRecordTypesWithIncome()
+    }
+
+    override fun countIncomeThisDay(): Flow<List<BigDecimal>> {
+        val start = Date(DateUtils.getTodayStartMillis())
+        val end = Date(DateUtils.getTodayEndMillis())
+        return mAppDatabase.getRecordDao().countIncomeThisDay(start, end)
+    }
+
+    override fun countPayThisDay(): Flow<List<BigDecimal>> {
+        val start = Date(DateUtils.getTodayStartMillis())
+        val end = Date(DateUtils.getTodayEndMillis())
+        return mAppDatabase.getRecordDao().countPayThisDay(start, end)
     }
 }

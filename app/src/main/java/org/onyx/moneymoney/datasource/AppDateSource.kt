@@ -17,4 +17,6 @@ interface AppDateSource {
     fun countIncomeThisMonth(): Flow<List<BigDecimal>>
     fun getRecordTypesWithPay(): Flow<List<RecordType>>
     fun getRecordTypesWithIncome(): Flow<List<RecordType>>
+    fun countIncomeThisDay(): Flow<List<BigDecimal>>
+    fun countPayThisDay(): Flow<List<BigDecimal>>
 }

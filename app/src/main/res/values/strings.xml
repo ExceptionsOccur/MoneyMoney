@@ -40,8 +40,8 @@
 
     <string name="text_statistics">统计</string>
     <string name="text_home">首页</string>
-    <string name="text_today_income">收入100.33</string>
-    <string name="text_today_pay">支出121.99</string>
+    <string name="text_today_income">收入</string>
+    <string name="text_today_pay">支出</string>
     <string name="text_month_pay">本月支出(元)</string>
     <string name="text_month_income">本月收入(元)：</string>
     <string name="text_remark">请输入备注信息</string>

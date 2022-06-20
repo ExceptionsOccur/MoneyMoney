@@ -77,6 +77,7 @@ class BindAdapter {
 
         /**
          * 首页金额的显示处理，正数添加+
+         * todo: 支出显示-，收入显示+
          */
         @JvmStatic
         @BindingAdapter("money_text")
@@ -86,7 +87,7 @@ class BindAdapter {
             else if (value.toFloat() < 0)
                 tv.text = String.format(value.toString())
             else
-                tv.text = String.format("+$value")
+                tv.text = String.format(value.toString())
         }
 
         /**

@@ -118,7 +118,7 @@
                         android:layout_width="0dp"
                         android:layout_height="25dp"
                         android:layout_weight="2"
-                        android:layout_marginTop="15dp"
+                        android:layout_gravity="center_vertical"
                         android:textSize="18sp"
                         android:textColor="@color/text_color_black"
                         android:text="@{String.valueOf(DateUtils.getMonthDateString())}" />
@@ -128,39 +128,65 @@
                         android:layout_height="18dp"
                         android:layout_weight="1"
                         android:layout_marginStart="9dp"
-                        android:layout_marginTop="13dp"
+                        android:layout_gravity="center_vertical"
                         android:textSize="12sp"
                         android:textColor="@color/text_color_black"
                         android:text="周六" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="18dp"
                         android:layout_weight="2"
-                        android:layout_marginTop="13dp"
-                        android:textSize="12sp"
-                        android:textAlignment="center"
-                        android:textColor="@color/text_color_black"
-                        android:text="@string/text_today_pay" />
+                        android:layout_gravity="center_vertical">
 
-                    <TextView
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="12sp"
+                            android:textAlignment="center"
+                            android:textColor="@color/text_color_black"
+                            android:text="@string/text_today_pay"
+                            tools:ignore="NestedWeights" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="18dp"
+                            android:layout_weight="1"
+                            android:textSize="12sp"
+                            android:textAlignment="textStart"
+                            android:textColor="@color/text_color_pay"
+                            android:text="@{pageData.payToday}" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="18dp"
                         android:layout_weight="2"
-                        android:layout_marginTop="13dp"
-                        android:textAlignment="center"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_color_black"
-                        android:text="@string/text_today_income" />
+                        android:layout_gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_color_black"
+                            android:text="@string/text_today_income"
+                            tools:ignore="NestedWeights" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textAlignment="textStart"
+                            android:textSize="12sp"
+                            android:textColor="@color/text_color_income"
+                            android:text="@{pageData.incomeToday}" />
+                    </LinearLayout>
 
                 </LinearLayout>
-
-                <!--            <LinearLayout-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="0dp"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:background="@color/white"-->
-                <!--                tools:ignore="NestedWeights">-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_home"
@@ -169,7 +195,6 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     tools:ignore="NestedWeights" />
-                <!--            </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

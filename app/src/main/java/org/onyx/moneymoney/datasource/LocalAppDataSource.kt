@@ -69,4 +69,13 @@ class LocalAppDataSource : AppDateSource {
         val end = Date(DateUtils.getTodayEndMillis())
         return mAppDatabase.getRecordDao().countPayThisDay(start, end)
     }
+
+    override suspend fun deleteRecordById(id: Int) {
+        if (id != -1)
+            mAppDatabase.getRecordDao().deleteRecordById(id)
+    }
+
+    override fun getRecordWithTypeById(id: Int): Flow<List<RecordWithType>> {
+        return mAppDatabase.getRecordTypeDao().getRecordTypesWithById(id)
+    }
 }

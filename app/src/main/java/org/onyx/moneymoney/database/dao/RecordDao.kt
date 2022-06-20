@@ -37,4 +37,8 @@ interface RecordDao {
     @Transaction
     @Query("select sum(money) from record where payment_type = 5 and counted = 1 and time between :start and :end")
     fun countIncomeThisDay(start: Date, end: Date): Flow<List<BigDecimal>>
+
+    @Transaction
+    @Query("delete from record where id = :id")
+    suspend fun deleteRecordById(id: Int)
 }

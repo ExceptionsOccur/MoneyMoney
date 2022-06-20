@@ -20,6 +20,7 @@ class RecordWithType(
 ) : Record() {
     fun getDetail(): RecordDetailBean {
         val detail = RecordDetailBean()
+        detail.id = id
         detail.imgName = recordTypes[0].imgName
         detail.category = category
         detail.type = paymentType

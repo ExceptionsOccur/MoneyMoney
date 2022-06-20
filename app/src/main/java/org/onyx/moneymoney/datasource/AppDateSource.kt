@@ -19,4 +19,6 @@ interface AppDateSource {
     fun getRecordTypesWithIncome(): Flow<List<RecordType>>
     fun countIncomeThisDay(): Flow<List<BigDecimal>>
     fun countPayThisDay(): Flow<List<BigDecimal>>
+    suspend fun deleteRecordById(id: Int)
+    fun getRecordWithTypeById(id: Int): Flow<List<RecordWithType>>
 }

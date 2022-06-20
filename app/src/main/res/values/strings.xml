@@ -61,4 +61,5 @@
     <string name="account">账户</string>
     <string name="remark">备注</string>
     <string name="money">记账金额</string>
+    <string name="record_delete">删除</string>
 </resources>

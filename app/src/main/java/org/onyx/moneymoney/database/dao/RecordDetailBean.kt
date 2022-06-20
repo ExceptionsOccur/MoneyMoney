@@ -9,6 +9,7 @@ import androidx.databinding.BaseObservable
 
  */
 class RecordDetailBean : BaseObservable() {
+    var id: Int = -1
     var imgName: String = "ic_repast"
     var category: String = ""
     var type: Int = 3

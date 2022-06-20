@@ -22,6 +22,7 @@ import org.onyx.moneymoney.base.BaseViewModel
 import org.onyx.moneymoney.database.dao.AddDataBean
 import org.onyx.moneymoney.database.entity.Record
 import org.onyx.moneymoney.database.entity.RecordType
+import org.onyx.moneymoney.database.entity.RecordWithType
 
 class AddRecordViewModel : BaseViewModel() {
     var typeIndex: Int = 0
@@ -104,4 +105,9 @@ class AddRecordViewModel : BaseViewModel() {
             tv.setTextColor(if (enable) tv.context.getColor(R.color.text_color_black) else tv.context.getColor(R.color.icon_default))
     }
 
+    fun getRecordWithTypeById(id: Int): Flow<List<RecordWithType>> {
+        return mDataSource.getRecordWithTypeById(id).catch { e ->
+            e.printStackTrace()
+        }.flowOn(Dispatchers.IO)
+    }
 }

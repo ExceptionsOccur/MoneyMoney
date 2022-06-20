@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -37,10 +36,10 @@ class AddRecordActivity : BaseActivity() {
     private val vm = AddRecordViewModel()
     private lateinit var binding: ActivityAddBinding
     private lateinit var imm: InputMethodManager
-    private var addDataBean = AddDataBean()
+    private var bean = AddDataBean()
     private var typeIndex: Int by Delegates.observable(0, onChange = { _, _, newValue -> handleTypeChange(newValue) })
-    private var recordTypeWithPay = listOf<RecordType>()
-    private var recordTypeWithIncome = listOf<RecordType>()
+    private var rtPay = listOf<RecordType>()
+    private var rtIncome = listOf<RecordType>()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_add
@@ -63,16 +62,16 @@ class AddRecordActivity : BaseActivity() {
     private fun initData() {
 
         val rv = binding.rvAdd
-        binding.pageData = addDataBean
+        binding.pageData = bean
         rv.setup {
             addType<RecordType>(R.layout.rv_add_item)
             onClick(R.id.add_item) {
                 rvSelected = adapterPosition
             }
         }
-        vm.selectDefaultItemInRv(rv, addDataBean)
+        vm.selectDefaultItemInRv(rv, bean)
         // 默认正常统计
-        addDataBean.counted = 1
+        bean.counted = 1
     }
 
     private fun initCoroutines() {
@@ -83,22 +82,22 @@ class AddRecordActivity : BaseActivity() {
         }
         lifecycleScope.launchWhenCreated {
             vm.getRecordTypesWithPay().collect {
-                recordTypeWithPay = it
+                rtPay = it
             }
         }
         lifecycleScope.launchWhenCreated {
             vm.getRecordTypesWithIncome().collect {
-                recordTypeWithIncome = it
+                rtIncome = it
             }
         }
     }
 
     private fun handleTypeChange(to: Int) {
         if (to == 3) {
-            setData(recordTypeWithPay)
+            setData(rtPay)
         }
         if (to == 5) {
-            setData(recordTypeWithIncome)
+            setData(rtIncome)
         }
     }
 
@@ -135,20 +134,19 @@ class AddRecordActivity : BaseActivity() {
             finish()
         }
         binding.keyboard.keyboardCount.setOnClickListener {
-            addDataBean.counted = 1 - addDataBean.counted
-            addDataBean.countedText = if (addDataBean.counted > 0) getString(R.string.text_count) else getString(R.string.text_uncount)
+            bean.counted = 1 - bean.counted
+            bean.countedText = if (bean.counted > 0) getString(R.string.text_count) else getString(R.string.text_uncount)
         }
         binding.keyboard.keyboardConfirm.setOnClickListener {
-            addDataBean.type = typeIndex
-            if (typeIndex == 3 && addDataBean.money[0] != '-') {
-                if (addDataBean.money[0] == '+')
-                    addDataBean.money = "-" + addDataBean.money.substring(1)
+            bean.type = typeIndex
+            if (typeIndex == 3 && bean.money[0] != '-') {
+                if (bean.money[0] == '+')
+                    bean.money = "-" + bean.money.substring(1)
             }
-            if (typeIndex == 5 && addDataBean.money[0] == '-') {
-                addDataBean.money = addDataBean.money.substring(1)
+            if (typeIndex == 5 && bean.money[0] == '-') {
+                bean.money = bean.money.substring(1)
             }
-            Log.d("tag", addDataBean.money)
-            vm.insertRecord(addDataBean.toRecord())
+            vm.insertRecord(bean.toRecord())
             finish()
         }
         singleSelectGroup(
@@ -202,7 +200,7 @@ class AddRecordActivity : BaseActivity() {
     fun clickDatePicker() {
         val listener = DatePickerDialog.OnDateSetListener { _, _, month, dayOfMonth ->
             val actualMonth = month + 1
-            addDataBean.date = "$actualMonth-$dayOfMonth"
+            bean.date = "$actualMonth-$dayOfMonth"
         }
         val calendar = Calendar.getInstance()
         val dataPickerDialog =
@@ -218,7 +216,7 @@ class AddRecordActivity : BaseActivity() {
 
     @OnClick(ids = [R.id.time_picker])
     fun clickTimePicker() {
-        val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute -> addDataBean.time = "$hourOfDay:$minute" }
+        val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute -> bean.time = "$hourOfDay:$minute" }
         val calendar = Calendar.getInstance()
         val timePickerDialog = TimePickerDialog(
             this,
@@ -236,6 +234,16 @@ class AddRecordActivity : BaseActivity() {
         setImmersive()
 
         binding = getDataBinding() as ActivityAddBinding
+
+        val recordId = intent.extras?.get("id") as Int
+        lifecycleScope.launchWhenCreated {
+            vm.getRecordWithTypeById(recordId).collect {
+                val rt = it[0]
+                bean.money = String.format(rt.money.toString())
+                bean.counted = rt.counted
+            }
+        }
+
 
         initView()
         initData()
@@ -286,7 +294,7 @@ class AddRecordActivity : BaseActivity() {
         lastSelect.notifyChange()
         currentSelect.isChecked = 1
         currentSelect.notifyChange()
-        addDataBean.recordType = currentSelect
+        bean.recordType = currentSelect
     }
 
 }

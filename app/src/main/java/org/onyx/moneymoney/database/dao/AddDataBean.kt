@@ -23,8 +23,19 @@ import java.util.*
  */
 open class AddDataBean(
 ) : BaseObservable() {
+    @get:Bindable
     var type: Int = 3
+        set(value) {
+            field = value
+            notifyChange()
+        }
+
+    @get:Bindable
     var recordType: RecordType = RecordType()
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
     @get:Bindable
     var date: String = DateUtils.getMonthDateString() ?: "01-01"
@@ -42,9 +53,17 @@ open class AddDataBean(
 
     @get:Bindable
     var remark: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
     @get:Bindable
     var money: String = ""
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
     @get:Bindable
     var moneyFrom: List<String> = listOf("支付宝", "京东")
@@ -59,6 +78,8 @@ open class AddDataBean(
             field = value
             notifyPropertyChanged(BR.keyboardData)
         }
+
+    @get:Bindable
     var countedText: String = "正常统计"
         set(value) {
             field = value

@@ -15,4 +15,5 @@
     <color name="icon_selected">#FFFFFFFF</color>
     <color name="icon_background_selected">#2F88FF</color>
     <color name="icon_default">#999</color>
+    <color name="text_color_delete">#FFdf1e1e</color>
 </resources>

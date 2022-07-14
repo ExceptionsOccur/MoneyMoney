@@ -92,6 +92,10 @@ class AddRecordActivity : BaseActivity() {
         }
     }
 
+    /**
+     * 选中支出或收入标签时设置分类数据
+     * @param to Int    支出或收入的值
+     */
     private fun handleTypeChange(to: Int) {
         if (to == 3) {
             setData(rtPay)
@@ -101,6 +105,10 @@ class AddRecordActivity : BaseActivity() {
         }
     }
 
+    /**
+     * 多个views的单选处理，主要处理账单分类tab的选中结果
+     * @param views Array<out View>     需要做单选处理的views组合
+     */
     private fun singleSelectGroup(vararg views: View) {
         views[typeIndex].isSelected = true
         typeIndex = 3
@@ -252,6 +260,10 @@ class AddRecordActivity : BaseActivity() {
 
     }
 
+    /**
+     * 设置recyclerview的数据，包括刷新ui动作
+     * @param data List<Any>    数据列表
+     */
     private fun setData(data: List<Any>) {
         binding.rvAdd.models = data
     }
@@ -261,6 +273,13 @@ class AddRecordActivity : BaseActivity() {
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
+    /**
+     * 判断点击位置是否在指定的view上，即是否点击了指定的view
+     * @param view View 待判断的view
+     * @param x Int 点击位置x坐标
+     * @param y Int 点击位置y坐标
+     * @return Boolean  true: 点中，false，未点中
+     */
     private fun isTouchPointInView(view: View, x: Int, y: Int): Boolean {
         val location = IntArray(2)
         view.getLocationOnScreen(location)
@@ -272,6 +291,11 @@ class AddRecordActivity : BaseActivity() {
         return y in top..bottom && x >= left && x <= right
     }
 
+    /**
+     * 拦截点击事件分发处理，获取点击的坐标，然后判断是否落在备注输入框上
+     * @param ev MotionEvent    动作事件
+     * @return Boolean  返回该事件给系统，继续本来应有的点击操作
+     */
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (ev.action == MotionEvent.ACTION_DOWN) {
             // 获取点击坐标
@@ -286,8 +310,12 @@ class AddRecordActivity : BaseActivity() {
         return super.dispatchTouchEvent(ev)
     }
 
+    /**
+     * 选择账单分类的处理，先将上一个选中取消，再选中当前选择
+     * @param last Int  上一个选中的序号
+     * @param cur Int   本次选中的序号
+     */
     private fun onRvSelectedChange(last: Int, cur: Int) {
-        // 单选，选择时先取消上一个的选中再将本次选择设为选中
         val lastSelect = binding.rvAdd.bindingAdapter.getModel<RecordType>(last)
         val currentSelect = binding.rvAdd.bindingAdapter.getModel<RecordType>(cur)
         lastSelect.isChecked = 0

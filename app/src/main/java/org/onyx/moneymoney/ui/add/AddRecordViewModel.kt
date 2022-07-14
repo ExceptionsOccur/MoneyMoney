@@ -27,6 +27,11 @@ import org.onyx.moneymoney.database.entity.RecordWithType
 class AddRecordViewModel : BaseViewModel() {
     var typeIndex: Int = 0
 
+    /**
+     * 默认选中RecyclerView第一个对象，监听了控件树的渲染情况，渲染完成后才设置，否则无法获取相关对象
+     * @param rv RecyclerView   指定的RecyclerView
+     * @param addDataBean AddDataBean   选中的对象数据
+     */
     fun selectDefaultItemInRv(rv: RecyclerView, addDataBean: AddDataBean) {
         rv.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -67,10 +72,21 @@ class AddRecordViewModel : BaseViewModel() {
         }
     }
 
+    /**
+     * 获取指定recyclerview指定的view
+     * @param rv RecyclerView   需要查找的recyclerview
+     * @param pos Int   view的索引
+     * @return View?    recyclerview子对象，可为空
+     */
     fun getRecycleItemView(rv: RecyclerView, pos: Int): View? {
         return rv.layoutManager?.findViewByPosition(pos)
     }
 
+    /**
+     * 键盘输入的功能处理
+     * @param targetView EditText   影响的edittext，点击后改变edittext内容
+     * @param keyboardBtns Array<out TextView>  所有可以输入的按键
+     */
     fun customKeyboardInput(targetView: EditText, vararg keyboardBtns: TextView) {
         for (btn in keyboardBtns) {
             btn.setOnClickListener {
@@ -85,6 +101,11 @@ class AddRecordViewModel : BaseViewModel() {
         }
     }
 
+    /**
+     * 键盘上删除键的功能处理
+     * @param targetView EditText   删除键影响的edittext，点击后改变edittext内容
+     * @param layout LinearLayout   删除键的布局控件，添加事件监听，包括点击和长按监听
+     */
     fun customKeyboardDelete(targetView: EditText, layout: LinearLayout) {
         layout.setOnClickListener {
             var s = targetView.text.toString()
@@ -99,6 +120,11 @@ class AddRecordViewModel : BaseViewModel() {
         }
     }
 
+    /**
+     * 根据点击状态改变文字颜色，主要是对键盘的显示处理
+     * @param tvs Array<out TextView>   需要判断的textview列表
+     * @param enable Boolean    点击状态，true: 可点击，false: 不可点击
+     */
     @RequiresApi(Build.VERSION_CODES.M)
     fun changeColorIfDisable(vararg tvs: TextView, enable: Boolean) {
         for (tv in tvs)
